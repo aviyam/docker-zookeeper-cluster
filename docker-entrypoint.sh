@@ -31,8 +31,8 @@ if [[ ! -f "$CONF_DIR/zoo.cfg" ]]; then
 done
 fi
 echo "Starting zookeeper server node $ZOO_MY_ID"
-echo "with  the following configuration settings:"
-echo "$CONFIG"
+echo "configuration file $CONFIG :"
+cat "$CONFIG"
 echo "${ZOO_MY_ID:-1}" > "$DATA_DIR/myid"
 
 exec "$@"
