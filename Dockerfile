@@ -1,6 +1,6 @@
 FROM openjdk:8-jre-alpine
 
-MAINTAINER Aviyam Fischer <aviyam.fischer@ecitele.com>
+MAINTAINER Aviyam Fischer <aviyam@gmail.com>
 
 ARG DISTRO_NAME=zookeeper-3.4.11
 
