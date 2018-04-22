@@ -37,7 +37,7 @@ if [[ ! -f "$CONF_DIR/zoo.cfg" ]]; then
 done
 fi
 
-echo "${MY_ID:-1}" > "$DATA_DIR/myid"
+echo "${ZOO_MY_ID:-1}" > "$DATA_DIR/myid"
 
 exec "$@"
 
