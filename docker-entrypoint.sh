@@ -32,7 +32,7 @@ done
 fi
 echo "Starting zookeeper server node $ZOO_MY_ID"
 echo "configuration file $CONFIG :"
-cat "$CONFIG"
+cat $CONFIG
 echo "${ZOO_MY_ID:-1}" > "$DATA_DIR/myid"
 
 exec "$@"
