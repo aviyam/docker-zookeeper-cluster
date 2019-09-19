@@ -2,7 +2,7 @@ FROM openjdk:8-jre-alpine
 
 MAINTAINER Aviyam Fischer <aviyam@gmail.com>
 
-ARG DISTRO_NAME=zookeeper-3.4.11
+ARG DISTRO_NAME=apache-zookeeper-3.5.5
 
 RUN apk add --no-cache bash su-exec wget
 
@@ -33,26 +33,24 @@ src \
 README_packaging.txt"
 
 # Get zookeeper and clean from unneeded stuff
-RUN set -ex; \
-    [ ! -e $DISTRO_NAME.tar.gz ] && wget -q "https://www.apache.org/dist/zookeeper/$DISTRO_NAME/$DISTRO_NAME.tar.gz"; \
-    tar -xvzf "$DISTRO_NAME.tar.gz"; \
-    cd "$DISTRO_NAME"; \
-    for file in $del_list; do rm -rf $file;done ; \
-    mv "conf/"* "$CONF_DIR"; \
-    cd .. ; \
-    rm -rf "$DISTRO_NAME.tar.gz"
+RUN  S_DISTRO_NAME=${DISTRO_NAME#"apache-"};  [ ! -e $DISTRO_NAME.tar.gz ] && wget -q "https://www.apache.org/dist/zookeeper/$S_DISTRO_NAME/$DISTRO_NAME-bin.tar.gz" ; \
+tar xvzf "$DISTRO_NAME-bin.tar.gz" ; \ 
+cd "$DISTRO_NAME-bin" ; \
+for file in $del_list; do rm -rf $file;done ; \
+mv "conf/"* "$CONF_DIR" ; \
+cd .. ; rm -rf "$DISTRO_NAME-bin.tar.gz"
 
-WORKDIR $DISTRO_NAME
+WORKDIR $DISTRO_NAME-bin
 
 VOLUME ["$DATA_DIR", "$DATA_LOG_DIR"]
 
 EXPOSE $PORT 2888 3888
 
-ENV PATH=$PATH:/$DISTRO_NAME/bin \
+ENV PATH=$PATH:/$DISTRO_NAME-bin/bin \
     ZOOCFGDIR=$CONF_DIR
 
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-CMD ["zkServer.sh", "start-foreground"]
+CMD ["bin/zkServer.sh", "start-foreground"]
