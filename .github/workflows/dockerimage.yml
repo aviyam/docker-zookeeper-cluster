@@ -13,4 +13,6 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag aviyam/zookeeper:$(date +%s)
     - name: Tag the Docker image
-      run: docker image  --tag aviyam/zookeeper:$(date +%s) aviyam/zookeeper:latest
+      run: docker image tag aviyam/zookeeper:$(date +%s) aviyam/zookeeper:latest
+    - name: Upload to dockerhub
+      run: docker push aviyam/zookeeper:latest
