@@ -10,9 +10,12 @@ jobs:
  
     steps:
     - uses: actions/checkout@v1
+    - name: Save variables
+      run: echo $(date +%s) > date.txt
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag aviyam/zookeeper:$(date +%s)
+      run: d=$(cat date.txt); docker build . --file Dockerfile --tag aviyam/zookeeper:$d
     - name: Tag the Docker image
-      run: docker image tag aviyam/zookeeper:$(date +%s) aviyam/zookeeper:latest
+      run: d=$(cat date.txt);docker image tag aviyam/zookeeper:$d aviyam/zookeeper:latest
     - name: Upload to dockerhub
-      run: docker push aviyam/zookeeper:latest
+      run: d=$(cat date.txt);docker push aviyam/zookeeper:latest;docker push aviyam/zookeeper:$d
+
