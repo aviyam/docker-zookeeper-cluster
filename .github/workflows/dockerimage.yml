@@ -16,6 +16,8 @@ jobs:
       run: d=$(cat date.txt); docker build . --file Dockerfile --tag aviyam/zookeeper:$d
     - name: Tag the Docker image
       run: d=$(cat date.txt);docker image tag aviyam/zookeeper:$d aviyam/zookeeper:latest
+    - name: login to dockerhub
+      run: docker login
     - name: Upload to dockerhub
       run: d=$(cat date.txt);docker push aviyam/zookeeper:latest;docker push aviyam/zookeeper:$d
 
