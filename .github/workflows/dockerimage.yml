@@ -16,7 +16,7 @@ jobs:
     - name: Tag the Docker image
       run: d=$(cat date.txt);docker image tag aviyam/zookeeper:$d aviyam/zookeeper:latest
     - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
+      uses: elgohr/Publish-Docker-Github-Action@v5
       with:
         name: aviyam/docker-zookeeper-cluster
         username: ${{ secrets.DOCKER_USERNAME }}
